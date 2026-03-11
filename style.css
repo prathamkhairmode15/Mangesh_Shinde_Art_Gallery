@@ -509,7 +509,11 @@ blockquote {
 .nav-toggle.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
 @media (max-width: 768px) {
-    .nav-toggle { display: flex; }
+    .nav-toggle { 
+        display: flex;
+        padding: 10px; /* Larger hit area */
+        margin-right: -10px;
+    }
     
     .nav-links {
         position: fixed;
@@ -535,6 +539,19 @@ blockquote {
         font-size: 1.5rem;
     }
 }
+
+/* Three-dot menu style */
+.nav-toggle span {
+    width: 6px;
+    height: 6px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    transition: 0.3s var(--transition);
+}
+
+.nav-toggle.active span:nth-child(1) { transform: scale(1.5) translate(0, 5px); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { transform: scale(1.5) translate(0, -5px); }
 
 /* Animations */
 .reveal-text {
