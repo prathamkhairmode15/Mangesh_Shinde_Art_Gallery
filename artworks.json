@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "image": "assets/landscape_1.png",
+        "title": "Misty Peaks",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil on Canvas",
+        "status": "Available"
+    },
+    {
+        "id": 2,
+        "image": "assets/conceptual_1.png",
+        "title": "Soul's Echo",
+        "date": "2023",
+        "category": "Conceptual",
+        "medium": "Mixed Media",
+        "status": "Sold"
+    },
+    {
+        "id": 3,
+        "image": "assets/abstract_1.png",
+        "title": "Golden Echo",
+        "date": "2024",
+        "category": "Abstract",
+        "medium": "Abstract Oil",
+        "status": "Available"
+    },
+    {
+        "id": 4,
+        "image": "assets/still_life_1.png",
+        "title": "The Wilting Rose",
+        "date": "2025",
+        "category": "Still Life",
+        "medium": "Classical Study",
+        "status": "Available"
+    }
+]

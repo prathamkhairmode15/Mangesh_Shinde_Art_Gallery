@@ -126,28 +126,37 @@ if (!isTouchDevice) {
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const lightboxCaption = document.getElementById('lightbox-caption');
-const closeLightbox = document.querySelector('.lightbox-close');
-const triggers = document.querySelectorAll('.lightbox-trigger');
+const closeBtn = document.querySelector('.lightbox-close');
 const prevBtn = document.getElementById('prev-img');
 const nextBtn = document.getElementById('next-img');
 
 let currentImgIndex = 0;
-const images = Array.from(triggers).map(trigger => ({
-    src: trigger.dataset.src,
-    title: trigger.dataset.title,
-    desc: trigger.dataset.desc
-}));
+let triggers = [];
 
 function openLightbox(index) {
+    if (!lightbox) return;
     currentImgIndex = index;
     updateLightboxContent();
+    
     lightbox.style.display = 'flex';
-    gsap.to(lightbox, { opacity: 1, duration: 0.5, ease: 'power2.out' });
-    lenis.stop(); // Stop scrolling when lightbox is open
+    gsap.to(lightbox, { 
+        opacity: 1, 
+        duration: 0.5, 
+        ease: 'power2.out',
+        onStart: () => lenis.stop()
+    });
 }
 
 function updateLightboxContent() {
-    const data = images[currentImgIndex];
+    const trigger = triggers[currentImgIndex];
+    if (!trigger) return;
+
+    const data = {
+        src: trigger.dataset.src,
+        title: trigger.dataset.title,
+        desc: trigger.dataset.desc
+    };
+
     gsap.to(lightboxImg, { opacity: 0, duration: 0.2, onComplete: () => {
         lightboxImg.src = data.src;
         lightboxCaption.innerHTML = `<strong>${data.title}</strong><br>${data.desc}`;
@@ -155,23 +164,31 @@ function updateLightboxContent() {
     }});
 }
 
-triggers.forEach((trigger, index) => {
-    trigger.addEventListener('click', () => openLightbox(index));
-});
+function initLightboxTriggers() {
+    triggers = Array.from(document.querySelectorAll('.lightbox-trigger'));
+    triggers.forEach((trigger, index) => {
+        trigger.addEventListener('click', () => openLightbox(index));
+    });
+}
 
-if (closeLightbox) {
-    closeLightbox.addEventListener('click', () => {
-        gsap.to(lightbox, { opacity: 0, duration: 0.5, ease: 'power2.in', onComplete: () => {
-            lightbox.style.display = 'none';
-            lenis.start();
-        }});
+if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+        gsap.to(lightbox, { 
+            opacity: 0, 
+            duration: 0.5, 
+            ease: 'power2.in', 
+            onComplete: () => {
+                lightbox.style.display = 'none';
+                lenis.start();
+            }
+        });
     });
 }
 
 if (prevBtn) {
     prevBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        currentImgIndex = (currentImgIndex - 1 + images.length) % images.length;
+        currentImgIndex = (currentImgIndex - 1 + triggers.length) % triggers.length;
         updateLightboxContent();
     });
 }
@@ -179,7 +196,7 @@ if (prevBtn) {
 if (nextBtn) {
     nextBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        currentImgIndex = (currentImgIndex + 1) % images.length;
+        currentImgIndex = (currentImgIndex + 1) % triggers.length;
         updateLightboxContent();
     });
 }
@@ -188,25 +205,103 @@ if (nextBtn) {
 const navToggle = document.querySelector('.nav-toggle');
 const navLinks = document.querySelector('.nav-links');
 
-if (navToggle && navLinks) {
-    navToggle.addEventListener('click', () => {
-        navToggle.classList.toggle('active');
-        navLinks.classList.toggle('active');
-        if (navLinks.classList.contains('active')) {
-            lenis.stop();
-        } else {
+function initMobileNav() {
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            if (navLinks.classList.contains('active')) {
+                lenis.stop();
+            } else {
+                lenis.start();
+            }
+        });
+    }
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navToggle) navToggle.classList.remove('active');
+            if (navLinks) navLinks.classList.remove('active');
             lenis.start();
+        });
+    });
+}
+initMobileNav();
+
+// Artworks Data & Rendering
+let allArtworks = [];
+async function loadArtworks() {
+    try {
+        const response = await fetch('artworks.json');
+        allArtworks = await response.json();
+        
+        const isHomePage = !!document.getElementById('home-gallery-grid');
+        const isPortfolioPage = !!document.getElementById('portfolio-gallery-grid');
+        
+        if (isHomePage) {
+            renderArtworks('home-gallery-grid', 3); 
+        } else if (isPortfolioPage) {
+            renderArtworks('portfolio-gallery-grid');
+            initFilters();
         }
+    } catch (error) {
+        console.error('Error loading artworks:', error);
+    }
+}
+
+function renderArtworks(containerId, limit = null, categoryFilter = 'All') {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    let filtered = allArtworks;
+    if (categoryFilter !== 'All') {
+        filtered = allArtworks.filter(art => art.category === categoryFilter);
+    }
+
+    if (limit) {
+        filtered = filtered.slice(0, limit);
+    }
+
+    container.innerHTML = filtered.map(art => `
+        <div class="gallery-item lightbox-trigger" 
+             data-src="${art.image}" 
+             data-title="${art.title}" 
+             data-desc="${art.medium} (${art.date})">
+            <div class="gallery-img-wrapper">
+                <img src="${art.image}" alt="${art.title}" loading="lazy">
+                <div class="gallery-overlay">
+                    <h3>${art.title}</h3>
+                    ${art.status === 'Sold' ? '<span class="status-badge sold">Sold</span>' : ''}
+                </div>
+            </div>
+        </div>
+    `).join('');
+
+    initLightboxTriggers();
+    initAnimations(); 
+    refreshCursorHovers();
+}
+
+function initFilters() {
+    const filterContainer = document.querySelector('.filter-container');
+    if (!filterContainer) return;
+
+    const categories = ['All', ...new Set(allArtworks.map(art => art.category))];
+    filterContainer.innerHTML = categories.map(cat => `
+        <button class="filter-btn ${cat === 'All' ? 'active' : ''} magnetic" data-category="${cat}">${cat}</button>
+    `).join('');
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderArtworks('portfolio-gallery-grid', null, btn.dataset.category);
+        });
     });
 }
 
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navToggle.classList.remove('active');
-        navLinks.classList.remove('active');
-        lenis.start();
-    });
-});
+// Initial load
+loadArtworks();
 
 // Animations Initialization
 function initAnimations() {
@@ -273,14 +368,18 @@ function initAnimations() {
     });
 }
 
-// Cursor states
-document.querySelectorAll('a, button, .gallery-item, .theme-toggle').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        document.body.classList.add('cursor-hover');
-        gsap.to(follower, { scale: 2, backgroundColor: 'rgba(197, 160, 89, 0.1)', duration: 0.3 });
+// Cursor Interactions
+function refreshCursorHovers() {
+    const follower = document.querySelector('.cursor-follower');
+    document.querySelectorAll('a, button, .gallery-item, .theme-toggle, .filter-btn').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            document.body.classList.add('cursor-hover');
+            gsap.to(follower, { scale: 2, backgroundColor: 'rgba(197, 160, 89, 0.1)', duration: 0.3 });
+        });
+        el.addEventListener('mouseleave', () => {
+            document.body.classList.remove('cursor-hover');
+            gsap.to(follower, { scale: 1, backgroundColor: 'transparent', duration: 0.3 });
+        });
     });
-    el.addEventListener('mouseleave', () => {
-        document.body.classList.remove('cursor-hover');
-        gsap.to(follower, { scale: 1, backgroundColor: 'transparent', duration: 0.3 });
-    });
-});
+}
+refreshCursorHovers();

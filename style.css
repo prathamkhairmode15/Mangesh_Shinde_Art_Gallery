@@ -556,6 +556,41 @@ blockquote {
     transform: translateY(-5px);
 }
 
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.7rem;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    margin-top: 0.5rem;
+}
+
+.status-badge.sold {
+    background: rgba(255, 99, 71, 0.2);
+    color: #ff6347;
+    border: 1px solid rgba(255, 99, 71, 0.3);
+}
+
+/* Filtering */
+.filter-btn {
+    background: transparent;
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    color: var(--text-color);
+    padding: 0.6rem 1.5rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: all 0.3s var(--transition);
+}
+
+.filter-btn.active, .filter-btn:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    border-color: var(--accent-color);
+}
+
 @media (max-width: 768px) {
     .contact-section {
         padding: 5rem 5%;
