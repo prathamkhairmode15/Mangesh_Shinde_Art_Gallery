@@ -30,27 +30,30 @@ gsap.ticker.add((time) => {
 gsap.ticker.lagSmoothing(0);
 
 // Preloader Logic
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const preloader = document.getElementById('preloader');
     const loaderBar = document.querySelector('.loader-bar');
     
-    // Simulate loading progress
+    // Speed up initial load reveal
     gsap.to(loaderBar, {
         width: '100%',
-        duration: 1,
+        duration: 0.6,
         ease: 'power2.inOut',
         onComplete: () => {
             gsap.to(preloader, {
                 opacity: 0,
-                duration: 1,
+                duration: 0.6,
                 ease: 'power2.inOut',
                 onComplete: () => {
                     preloader.style.visibility = 'hidden';
-                    initAnimations();
+                    // initAnimations already called via reveal timing or after load
                 }
             });
         }
     });
+
+    // High priority animations
+    initAnimations();
 });
 
 // Theme Toggle Logic
@@ -278,7 +281,8 @@ function renderArtworks(containerId, limit = null, categoryFilter = 'All') {
     `).join('');
 
     initLightboxTriggers();
-    initAnimations(); 
+    initGalleryAnimations();
+    ScrollTrigger.refresh();
     refreshCursorHovers();
 }
 
@@ -304,7 +308,14 @@ function initFilters() {
 loadArtworks();
 
 // Animations Initialization
+let animationsInitialized = false;
 function initAnimations() {
+    if (animationsInitialized) {
+        ScrollTrigger.refresh();
+        return;
+    }
+    animationsInitialized = true;
+
     // Hero Reveal
     const heroTl = gsap.timeline();
     heroTl.to('.reveal-text', {
@@ -315,9 +326,9 @@ function initAnimations() {
         ease: 'power3.out'
     });
 
-    heroTl.from('.hero-image-container', {
-        opacity: 0,
-        scale: 1.1,
+    heroTl.to('.hero-image-container', {
+        opacity: 1,
+        scale: 1,
         duration: 1.5,
         ease: 'power2.out'
     }, "-=1");
@@ -334,18 +345,6 @@ function initAnimations() {
         }
     });
 
-    // Gallery Reveal
-    gsap.from('.gallery-item', {
-        opacity: 0,
-        y: 60,
-        duration: 1,
-        stagger: 0.1,
-        scrollTrigger: {
-            trigger: '.gallery-grid',
-            start: 'top 85%',
-        }
-    });
-
     // About Section
     gsap.from('.about-text', {
         opacity: 0,
@@ -353,7 +352,7 @@ function initAnimations() {
         duration: 1.2,
         scrollTrigger: {
             trigger: '.about-section',
-            start: 'top 75%',
+            start: 'top 85%',
         }
     });
 
@@ -363,7 +362,20 @@ function initAnimations() {
         duration: 1.5,
         scrollTrigger: {
             trigger: '.about-section',
-            start: 'top 60%',
+            start: 'top 70%',
+        }
+    });
+}
+
+function initGalleryAnimations() {
+    gsap.from('.gallery-item', {
+        opacity: 0,
+        y: 60,
+        duration: 1,
+        stagger: 0.1,
+        scrollTrigger: {
+            trigger: '.gallery-grid',
+            start: 'top 85%',
         }
     });
 }
