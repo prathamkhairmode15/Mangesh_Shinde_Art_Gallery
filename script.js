@@ -94,29 +94,33 @@ window.addEventListener('mousemove', (e) => {
 
 // Magnetic Buttons
 const magneticItems = document.querySelectorAll('.magnetic');
-magneticItems.forEach(item => {
-    item.addEventListener('mousemove', (e) => {
-        const rect = item.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+if (!isTouchDevice) {
+    magneticItems.forEach(item => {
+        item.addEventListener('mousemove', (e) => {
+            const rect = item.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            gsap.to(item, {
+                x: x * 0.3,
+                y: y * 0.3,
+                duration: 0.5,
+                ease: 'power2.out'
+            });
+        });
         
-        gsap.to(item, {
-            x: x * 0.3,
-            y: y * 0.3,
-            duration: 0.5,
-            ease: 'power2.out'
+        item.addEventListener('mouseleave', () => {
+            gsap.to(item, {
+                x: 0,
+                y: 0,
+                duration: 0.5,
+                ease: 'elastic.out(1, 0.3)'
+            });
         });
     });
-    
-    item.addEventListener('mouseleave', () => {
-        gsap.to(item, {
-            x: 0,
-            y: 0,
-            duration: 0.5,
-            ease: 'elastic.out(1, 0.3)'
-        });
-    });
-});
+}
 
 // Lightbox Logic
 const lightbox = document.getElementById('lightbox');

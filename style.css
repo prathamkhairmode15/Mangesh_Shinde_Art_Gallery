@@ -186,6 +186,63 @@ blockquote {
     .logo {
         font-size: 1.2rem;
     }
+
+    /* Preloader Mobile */
+    .loader-text {
+        font-size: 1rem;
+        letter-spacing: 0.5rem;
+    }
+
+    /* Lightbox Mobile */
+    .lightbox-nav {
+        padding: 0 1rem;
+    }
+
+    .lightbox-nav button {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .lightbox-caption {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+
+    .lightbox-close {
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+    }
+
+    /* Disable magnetic/cursor on small screens */
+    .magnetic {
+        transform: none !important;
+        transition: none !important;
+    }
+    
+    .cursor, .cursor-follower {
+        display: none !important;
+    }
+    
+    body {
+        cursor: auto !important;
+    }
+}
+
+/* Force disable for touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .magnetic {
+        transform: none !important;
+        transition: none !important;
+    }
+    .cursor, .cursor-follower {
+        display: none !important;
+    }
+    body {
+        cursor: auto !important;
+    }
 }
 
 /* Hero Section */
@@ -321,7 +378,7 @@ blockquote {
 
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 4rem;
 }
 
@@ -333,6 +390,16 @@ blockquote {
     .gallery-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-img-wrapper {
+        height: 350px;
     }
 }
 
@@ -704,6 +771,13 @@ blockquote {
     background: var(--accent-color);
     margin: 1.5rem auto;
     transition: width 0.5s ease;
+}
+
+@media (max-width: 768px) {
+    .loader-text {
+        font-size: 1rem;
+        letter-spacing: 0.5rem;
+    }
 }
 
 /* Magnetic Button Helper */
