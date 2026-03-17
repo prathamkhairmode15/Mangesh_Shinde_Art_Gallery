@@ -232,24 +232,58 @@ function initMobileNav() {
 initMobileNav();
 
 // Artworks Data & Rendering
+const ARTWORKS_DATA = [
+    {
+        "id": 1,
+        "image": "assets/landscape_1.png",
+        "title": "Misty Peaks",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil on Canvas",
+        "status": "Available"
+    },
+    {
+        "id": 2,
+        "image": "assets/conceptual_1.png",
+        "title": "Soul's Echo",
+        "date": "2023",
+        "category": "Conceptual",
+        "medium": "Mixed Media",
+        "status": "Sold"
+    },
+    {
+        "id": 3,
+        "image": "assets/abstract_1.png",
+        "title": "Golden Echo",
+        "date": "2024",
+        "category": "Abstract",
+        "medium": "Abstract Oil",
+        "status": "Available"
+    },
+    {
+        "id": 4,
+        "image": "assets/still_life_1.png",
+        "title": "The Wilting Rose",
+        "date": "2025",
+        "category": "Still Life",
+        "medium": "Classical Study",
+        "status": "Available"
+    }
+];
+
 let allArtworks = [];
-async function loadArtworks() {
-    try {
-        const response = await fetch('artworks.json');
-        allArtworks = await response.json();
-        
-        const isHomePage = !!document.getElementById('home-gallery-grid');
-        const isPortfolioPage = !!document.getElementById('portfolio-gallery-grid');
-        
-        if (isHomePage) {
-            renderArtworks('home-gallery-grid', 3); 
-            initHeroSlideshow();
-        } else if (isPortfolioPage) {
-            renderArtworks('portfolio-gallery-grid');
-            initFilters();
-        }
-    } catch (error) {
-        console.error('Error loading artworks:', error);
+function loadArtworks() {
+    allArtworks = ARTWORKS_DATA;
+    
+    const isHomePage = !!document.getElementById('home-gallery-grid');
+    const isPortfolioPage = !!document.getElementById('portfolio-gallery-grid');
+    
+    if (isHomePage) {
+        renderArtworks('home-gallery-grid', 3); 
+        initHeroSlideshow();
+    } else if (isPortfolioPage) {
+        renderArtworks('portfolio-gallery-grid');
+        initFilters();
     }
 }
 
