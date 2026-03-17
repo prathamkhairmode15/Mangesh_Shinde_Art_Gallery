@@ -417,6 +417,7 @@ function initHeroSlideshow() {
 
 // Initial load
 loadArtworks();
+initContactForm();
 
 // Animations Initialization
 let animationsInitialized = false;
@@ -506,3 +507,26 @@ function refreshCursorHovers() {
     });
 }
 refreshCursorHovers();
+
+// Contact Form WhatsApp Integration
+function initContactForm() {
+    const contactForm = document.getElementById('contact-form');
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('contact-name').value;
+        const email = document.getElementById('contact-email').value;
+        const message = document.getElementById('contact-message').value;
+
+        const whatsappNumber = "9923469258";
+        const text = `*New Inquiry from Website*\n\n*Name:* ${name}\n*Email:* ${email}\n*Message:* ${message}`;
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+
+        window.open(whatsappUrl, '_blank');
+        
+        // Optional: Clear form or show success message
+        contactForm.reset();
+    });
+}
