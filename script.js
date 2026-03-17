@@ -277,13 +277,17 @@ function loadArtworks() {
     
     const isHomePage = !!document.getElementById('home-gallery-grid');
     const isPortfolioPage = !!document.getElementById('portfolio-gallery-grid');
+    const hasSlideshow = !!document.getElementById('hero-slideshow');
     
     if (isHomePage) {
         renderArtworks('home-gallery-grid', 3); 
-        initHeroSlideshow();
     } else if (isPortfolioPage) {
         renderArtworks('portfolio-gallery-grid');
         initFilters();
+    }
+
+    if (hasSlideshow) {
+        initHeroSlideshow();
     }
 }
 
@@ -389,13 +393,17 @@ function initHeroSlideshow() {
     }
 
     // Start the slideshow after a short delay to ensure layout is ready
-    window.addEventListener('load', () => {
-        gsap.delayedCall(1, slideNext);
-    });
-    
-    // If already loaded
+    function startSlideshow() {
+        // Double check if container still has items or was cleared
+        if (container.children.length > 0) {
+            gsap.delayedCall(1, slideNext);
+        }
+    }
+
     if (document.readyState === 'complete') {
-        gsap.delayedCall(1, slideNext);
+        startSlideshow();
+    } else {
+        window.addEventListener('load', startSlideshow);
     }
 
     // Handle resize: reset to avoid offset issues
