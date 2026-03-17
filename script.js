@@ -360,43 +360,36 @@ function initHeroSlideshow() {
     
     container.innerHTML = slideHTML + slideHTML; // Double the items for infinite effect
 
-    let currentIndex = 0;
-    const totalItems = slides.length;
-    let isAnimating = false;
+    let slideshowTween;
 
-    function getStepWidth() {
-        const firstItem = container.querySelector('.slideshow-item');
-        return firstItem ? firstItem.offsetWidth : 0;
-    }
-
-    function slideNext() {
-        if (isAnimating) return;
-        isAnimating = true;
-
-        currentIndex++;
-        const stepWidth = getStepWidth();
+    function startContinuousSlideshow() {
+        if (slideshowTween) slideshowTween.kill();
         
-        gsap.to(container, {
-            x: -currentIndex * stepWidth,
-            duration: 0.8,
-            ease: "power2.inOut",
-            onComplete: () => {
-                if (currentIndex >= totalItems) {
-                    currentIndex = 0;
-                    gsap.set(container, { x: 0 });
-                }
-                isAnimating = false;
-                // Delay of 0.5s before next slide as requested
-                gsap.delayedCall(0.5, slideNext);
+        const firstItem = container.querySelector('.slideshow-item');
+        if (!firstItem) return;
+        
+        const itemWidth = firstItem.offsetWidth;
+        const totalWidth = itemWidth * slides.length;
+        
+        // Speed calculation: e.g., 50 pixels per second
+        const speed = totalWidth / 50; 
+
+        gsap.set(container, { x: 0 });
+        slideshowTween = gsap.to(container, {
+            x: -totalWidth,
+            duration: speed,
+            ease: "none",
+            repeat: -1,
+            onReverseComplete: () => {
+                gsap.set(container, { x: 0 });
             }
         });
     }
 
     // Start the slideshow after a short delay to ensure layout is ready
     function startSlideshow() {
-        // Double check if container still has items or was cleared
         if (container.children.length > 0) {
-            gsap.delayedCall(1, slideNext);
+            startContinuousSlideshow();
         }
     }
 
@@ -406,12 +399,9 @@ function initHeroSlideshow() {
         window.addEventListener('load', startSlideshow);
     }
 
-    // Handle resize: reset to avoid offset issues
+    // Handle resize: recalculate and restart
     window.addEventListener('resize', () => {
-        gsap.killTweensOf(container);
-        currentIndex = 0;
-        gsap.set(container, { x: 0 });
-        isAnimating = false;
+        startContinuousSlideshow();
     });
 }
 
