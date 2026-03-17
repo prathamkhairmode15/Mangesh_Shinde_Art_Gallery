@@ -243,6 +243,7 @@ async function loadArtworks() {
         
         if (isHomePage) {
             renderArtworks('home-gallery-grid', 3); 
+            initHeroSlideshow();
         } else if (isPortfolioPage) {
             renderArtworks('portfolio-gallery-grid');
             initFilters();
@@ -301,6 +302,74 @@ function initFilters() {
             btn.classList.add('active');
             renderArtworks('portfolio-gallery-grid', null, btn.dataset.category);
         });
+    });
+}
+
+// Hero Slideshow
+function initHeroSlideshow() {
+    const container = document.getElementById('hero-slideshow');
+    if (!container || allArtworks.length === 0) return;
+
+    // Use up to 10 artworks
+    const slides = allArtworks.slice(0, 10);
+    
+    // Create slides and clone them for infinite loop
+    const slideHTML = slides.map(art => `
+        <div class="slideshow-item">
+            <img src="${art.image}" alt="${art.title}">
+        </div>
+    `).join('');
+    
+    container.innerHTML = slideHTML + slideHTML; // Double the items for infinite effect
+
+    let currentIndex = 0;
+    const totalItems = slides.length;
+    let isAnimating = false;
+
+    function getStepWidth() {
+        const firstItem = container.querySelector('.slideshow-item');
+        return firstItem ? firstItem.offsetWidth : 0;
+    }
+
+    function slideNext() {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        currentIndex++;
+        const stepWidth = getStepWidth();
+        
+        gsap.to(container, {
+            x: -currentIndex * stepWidth,
+            duration: 0.8,
+            ease: "power2.inOut",
+            onComplete: () => {
+                if (currentIndex >= totalItems) {
+                    currentIndex = 0;
+                    gsap.set(container, { x: 0 });
+                }
+                isAnimating = false;
+                // Delay of 0.5s before next slide as requested
+                gsap.delayedCall(0.5, slideNext);
+            }
+        });
+    }
+
+    // Start the slideshow after a short delay to ensure layout is ready
+    window.addEventListener('load', () => {
+        gsap.delayedCall(1, slideNext);
+    });
+    
+    // If already loaded
+    if (document.readyState === 'complete') {
+        gsap.delayedCall(1, slideNext);
+    }
+
+    // Handle resize: reset to avoid offset issues
+    window.addEventListener('resize', () => {
+        gsap.killTweensOf(container);
+        currentIndex = 0;
+        gsap.set(container, { x: 0 });
+        isAnimating = false;
     });
 }
 
