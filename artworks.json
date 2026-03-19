@@ -1,38 +1,524 @@
 [
     {
         "id": 1,
-        "image": "assets/landscape_1.png",
-        "title": "Misty Peaks",
+        "image": "assets/1.png",
+        "title": "Educational Heritage",
         "date": "2024",
-        "category": "Landscapes",
-        "medium": "Oil on Canvas",
+        "category": "Cityscapes",
+        "medium": "Oil",
         "status": "Available"
     },
     {
         "id": 2,
-        "image": "assets/conceptual_1.png",
-        "title": "Soul's Echo",
-        "date": "2023",
-        "category": "Conceptual",
-        "medium": "Mixed Media",
-        "status": "Sold"
+        "image": "assets/2.png",
+        "title": "Verdant Reflection",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
     },
     {
         "id": 3,
-        "image": "assets/abstract_1.png",
-        "title": "Golden Echo",
+        "image": "assets/3.png",
+        "title": "Misty Morning",
         "date": "2024",
-        "category": "Abstract",
-        "medium": "Abstract Oil",
+        "category": "Landscapes",
+        "medium": "Oil",
         "status": "Available"
     },
     {
         "id": 4,
-        "image": "assets/still_life_1.png",
-        "title": "The Wilting Rose",
-        "date": "2025",
-        "category": "Still Life",
-        "medium": "Classical Study",
+        "image": "assets/4.png",
+        "title": "Golden Hour",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 5,
+        "image": "assets/5.png",
+        "title": "Quiet Shore",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 6,
+        "image": "assets/6.png",
+        "title": "Rolling Hills",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 7,
+        "image": "assets/7.png",
+        "title": "Harbor Life",
+        "date": "2024",
+        "category": "Cityscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 8,
+        "image": "assets/8.png",
+        "title": "Mountain Serenity",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 9,
+        "image": "assets/9.png",
+        "title": "Evening Glow",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 10,
+        "image": "assets/10.png",
+        "title": "Misty Lake",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 11,
+        "image": "assets/11.png",
+        "title": "Reflection",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 12,
+        "image": "assets/12.png",
+        "title": "Sunlit Valley",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 13,
+        "image": "assets/13.png",
+        "title": "Coastal Charm",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 14,
+        "image": "assets/14.png",
+        "title": "Rustic Path",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 15,
+        "image": "assets/15.png",
+        "title": "Sunset Peaks",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 16,
+        "image": "assets/16.png",
+        "title": "Green Meadow",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 17,
+        "image": "assets/17.png",
+        "title": "Riverbed",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 18,
+        "image": "assets/18.png",
+        "title": "Autumn Hues",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 19,
+        "image": "assets/19.png",
+        "title": "Forest Edge",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 20,
+        "image": "assets/20.png",
+        "title": "Fishermen's Wharf",
+        "date": "2024",
+        "category": "Cityscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 21,
+        "image": "assets/21.png",
+        "title": "Quiet Waters",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 22,
+        "image": "assets/22.png",
+        "title": "Morning Mist",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 23,
+        "image": "assets/23.png",
+        "title": "Hillside View",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 24,
+        "image": "assets/24.png",
+        "title": "Valley Glow",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 25,
+        "image": "assets/25.png",
+        "title": "Bay View",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 26,
+        "image": "assets/26.png",
+        "title": "Rural Echo",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 27,
+        "image": "assets/27.png",
+        "title": "Distant Mountains",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 28,
+        "image": "assets/28.png",
+        "title": "The Elder",
+        "date": "2024",
+        "category": "Portraits",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 29,
+        "image": "assets/29.png",
+        "title": "Coastal Rocks",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 30,
+        "image": "assets/30.png",
+        "title": "Saga's Wisdom",
+        "date": "2024",
+        "category": "Portraits",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 31,
+        "image": "assets/31.png",
+        "title": "Warrior's Spirit",
+        "date": "2024",
+        "category": "Portraits",
+        "medium": "Mixed Media",
+        "status": "Available"
+    },
+    {
+        "id": 32,
+        "image": "assets/32.png",
+        "title": "Cliffside Tower",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 33,
+        "image": "assets/33.png",
+        "title": "Clock Tower Heritage",
+        "date": "2024",
+        "category": "Cityscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 34,
+        "image": "assets/34.png",
+        "title": "Mist over Hills",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 35,
+        "image": "assets/35.png",
+        "title": "Green Valley",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 36,
+        "image": "assets/36.png",
+        "title": "Sun-kissed Fields",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 37,
+        "image": "assets/37.png",
+        "title": "Silent Lake",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 38,
+        "image": "assets/38.png",
+        "title": "Azure Sky",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 39,
+        "image": "assets/39.png",
+        "title": "Golden Field",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 40,
+        "image": "assets/40.png",
+        "title": "Sandy Cove",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 41,
+        "image": "assets/41.png",
+        "title": "Mountain Ridge",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 42,
+        "image": "assets/42.png",
+        "title": "River Crossing",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 43,
+        "image": "assets/43.png",
+        "title": "Woodland Path",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 44,
+        "image": "assets/44.png",
+        "title": "Skyline Glow",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 45,
+        "image": "assets/45.png",
+        "title": "Dusk in the Valley",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 46,
+        "image": "assets/46.png",
+        "title": "Old Town Harbor",
+        "date": "2024",
+        "category": "Cityscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 47,
+        "image": "assets/47.png",
+        "title": "Foggy Morn",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 48,
+        "image": "assets/48.png",
+        "title": "Mountain Path",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 49,
+        "image": "assets/49.png",
+        "title": "Serene Stream",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 50,
+        "image": "assets/50.png",
+        "title": "Village Gathering",
+        "date": "2024",
+        "category": "Cityscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 51,
+        "image": "assets/51.png",
+        "title": "Green Meadows",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 52,
+        "image": "assets/52.png",
+        "title": "Silent Peaks",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 53,
+        "image": "assets/53.png",
+        "title": "Cloudy Valley",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 54,
+        "image": "assets/54.png",
+        "title": "Evening Pond",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 55,
+        "image": "assets/55.png",
+        "title": "Sunset Horizon",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 56,
+        "image": "assets/56.png",
+        "title": "Mist over Land",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 57,
+        "image": "assets/57.png",
+        "title": "Green Pastures",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
+        "status": "Available"
+    },
+    {
+        "id": 58,
+        "image": "assets/58.png",
+        "title": "Golden Sunset",
+        "date": "2024",
+        "category": "Landscapes",
+        "medium": "Oil",
         "status": "Available"
     }
 ]
