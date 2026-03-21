@@ -239,7 +239,6 @@ async function loadArtworks() {
         allArtworks = await response.json();
     } catch (error) {
         console.error('Error loading artworks:', error);
-        // Fallback to empty or previous small list if fetch fails
         allArtworks = [];
     }
     
@@ -248,7 +247,9 @@ async function loadArtworks() {
     const hasSlideshow = !!document.getElementById('hero-slideshow');
     
     if (isHomePage) {
-        renderArtworks('home-gallery-grid', 6); // Increased limit for home page
+        // Randomize homepage gallery slightly or keep fixed?
+        // Let's keep it fixed but shuffled if user wants "dynamic"
+        renderArtworks('home-gallery-grid', 6);
     } else if (isPortfolioPage) {
         renderArtworks('portfolio-gallery-grid');
         initFilters();
@@ -258,6 +259,7 @@ async function loadArtworks() {
         initHeroSlideshow();
     }
 }
+
 
 function renderArtworks(containerId, limit = null, categoryFilter = 'All') {
     const container = document.getElementById(containerId);
@@ -311,67 +313,79 @@ function initFilters() {
     });
 }
 
-// Hero Slideshow
+// Hero Slideshow (3D Flip)
 function initHeroSlideshow() {
     const container = document.getElementById('hero-slideshow');
-    if (!container || allArtworks.length === 0) return;
+    if (!container || allArtworks.length < 2) return;
 
-    // Use up to 10 artworks
-    const slides = allArtworks.slice(0, 10);
+    // Shuffle artworks for the slideshow to ensure no repeats on refresh
+    const shuffled = [...allArtworks].sort(() => Math.random() - 0.5);
     
-    // Create slides and clone them for infinite loop
-    const slideHTML = slides.map(art => `
-        <div class="slideshow-item">
-            <img src="${art.image}" alt="${art.title}">
+    container.innerHTML = `
+        <div class="flipper-card">
+            <div class="slide-face front">
+                <div class="slide-bg" style="background-image: url('${shuffled[0].image}')"></div>
+                <img src="${shuffled[0].image}" alt="${shuffled[0].title}">
+            </div>
+            <div class="slide-face back">
+                <div class="slide-bg" style="background-image: url('${shuffled[1].image}')"></div>
+                <img src="${shuffled[1].image}" alt="${shuffled[1].title}">
+            </div>
         </div>
-    `).join('');
-    
-    container.innerHTML = slideHTML + slideHTML; // Double the items for infinite effect
+    `;
 
-    let slideshowTween;
+    const card = container.querySelector('.flipper-card');
+    const frontImg = card.querySelector('.front img');
+    const frontBg = card.querySelector('.front .slide-bg');
+    const backImg = card.querySelector('.back img');
+    const backBg = card.querySelector('.back .slide-bg');
 
-    function startContinuousSlideshow() {
-        if (slideshowTween) slideshowTween.kill();
+    let nextIndex = 2; // We already used 0 and 1
+    let isFlipped = false;
+
+    function flip() {
+        isFlipped = !isFlipped;
         
-        const firstItem = container.querySelector('.slideshow-item');
-        if (!firstItem) return;
-        
-        const itemWidth = firstItem.offsetWidth;
-        const totalWidth = itemWidth * slides.length;
-        
-        // Speed calculation: e.g., 50 pixels per second
-        const speed = totalWidth / 50; 
-
-        gsap.set(container, { x: 0 });
-        slideshowTween = gsap.to(container, {
-            x: -totalWidth,
-            duration: speed,
-            ease: "none",
-            repeat: -1,
-            onReverseComplete: () => {
-                gsap.set(container, { x: 0 });
-            }
-        });
-    }
-
-    // Start the slideshow after a short delay to ensure layout is ready
-    function startSlideshow() {
-        if (container.children.length > 0) {
-            startContinuousSlideshow();
+        if (isFlipped) {
+            // Flip to Back
+            gsap.to(card, {
+                rotationY: 180,
+                duration: 1.5,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    // Update Front (now hidden) with the next image
+                    const art = shuffled[nextIndex % shuffled.length];
+                    frontImg.src = art.image;
+                    frontImg.alt = art.title;
+                    frontBg.style.backgroundImage = `url('${art.image}')`;
+                    nextIndex++;
+                }
+            });
+        } else {
+            // Flip to Front
+            gsap.to(card, {
+                rotationY: 0,
+                duration: 1.5,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    // Update Back (now hidden) with the next image
+                    const art = shuffled[nextIndex % shuffled.length];
+                    backImg.src = art.image;
+                    backImg.alt = art.title;
+                    backBg.style.backgroundImage = `url('${art.image}')`;
+                    nextIndex++;
+                }
+            });
         }
     }
 
-    if (document.readyState === 'complete') {
-        startSlideshow();
-    } else {
-        window.addEventListener('load', startSlideshow);
-    }
 
-    // Handle resize: recalculate and restart
-    window.addEventListener('resize', () => {
-        startContinuousSlideshow();
-    });
+    // Initial delay then start interval
+    setTimeout(() => {
+        setInterval(flip, 5000);
+    }, 2000);
 }
+
 
 // Initial load
 loadArtworks();
