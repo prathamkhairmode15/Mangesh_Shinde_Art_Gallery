@@ -33,7 +33,7 @@ gsap.ticker.lagSmoothing(0);
 document.addEventListener('DOMContentLoaded', () => {
     const preloader = document.getElementById('preloader');
     const loaderBar = document.querySelector('.loader-bar');
-    
+
     // Speed up initial load reveal
     gsap.to(loaderBar, {
         width: '100%',
@@ -70,7 +70,7 @@ if (themeToggle) {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-        
+
         // Visual feedback for theme change
         gsap.fromTo('body', { opacity: 0.8 }, { opacity: 1, duration: 0.5 });
     });
@@ -105,7 +105,7 @@ if (!isTouchDevice) {
             const rect = item.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;
-            
+
             gsap.to(item, {
                 x: x * 0.3,
                 y: y * 0.3,
@@ -113,7 +113,7 @@ if (!isTouchDevice) {
                 ease: 'power2.out'
             });
         });
-        
+
         item.addEventListener('mouseleave', () => {
             gsap.to(item, {
                 x: 0,
@@ -140,11 +140,11 @@ function openLightbox(index) {
     if (!lightbox) return;
     currentImgIndex = index;
     updateLightboxContent();
-    
+
     lightbox.style.display = 'flex';
-    gsap.to(lightbox, { 
-        opacity: 1, 
-        duration: 0.5, 
+    gsap.to(lightbox, {
+        opacity: 1,
+        duration: 0.5,
         ease: 'power2.out',
         onStart: () => lenis.stop()
     });
@@ -160,11 +160,13 @@ function updateLightboxContent() {
         desc: trigger.dataset.desc
     };
 
-    gsap.to(lightboxImg, { opacity: 0, duration: 0.2, onComplete: () => {
-        lightboxImg.src = data.src;
-        lightboxCaption.innerHTML = `<strong>${data.title}</strong><br>${data.desc}`;
-        gsap.to(lightboxImg, { opacity: 1, duration: 0.4 });
-    }});
+    gsap.to(lightboxImg, {
+        opacity: 0, duration: 0.2, onComplete: () => {
+            lightboxImg.src = data.src;
+            lightboxCaption.innerHTML = `<strong>${data.title}</strong><br>${data.desc}`;
+            gsap.to(lightboxImg, { opacity: 1, duration: 0.4 });
+        }
+    });
 }
 
 function initLightboxTriggers() {
@@ -176,10 +178,10 @@ function initLightboxTriggers() {
 
 if (closeBtn) {
     closeBtn.addEventListener('click', () => {
-        gsap.to(lightbox, { 
-            opacity: 0, 
-            duration: 0.5, 
-            ease: 'power2.in', 
+        gsap.to(lightbox, {
+            opacity: 0,
+            duration: 0.5,
+            ease: 'power2.in',
             onComplete: () => {
                 lightbox.style.display = 'none';
                 lenis.start();
@@ -241,11 +243,11 @@ async function loadArtworks() {
         console.error('Error loading artworks:', error);
         allArtworks = [];
     }
-    
+
     const isHomePage = !!document.getElementById('home-gallery-grid');
     const isPortfolioPage = !!document.getElementById('portfolio-gallery-grid');
     const hasSlideshow = !!document.getElementById('hero-slideshow');
-    
+
     if (isHomePage) {
         // Randomize homepage gallery slightly or keep fixed?
         // Let's keep it fixed but shuffled if user wants "dynamic"
@@ -320,7 +322,7 @@ function initHeroSlideshow() {
 
     // Shuffle artworks for the slideshow to ensure no repeats on refresh
     const shuffled = [...allArtworks].sort(() => Math.random() - 0.5);
-    
+
     container.innerHTML = `
         <div class="flipper-card">
             <div class="slide-face front">
@@ -345,12 +347,12 @@ function initHeroSlideshow() {
 
     function flip() {
         isFlipped = !isFlipped;
-        
+
         if (isFlipped) {
             // Flip to Back
             gsap.to(card, {
                 rotationY: 180,
-                duration: 1.5,
+                duration: 1.0,
                 ease: "power2.inOut",
                 onComplete: () => {
                     // Update Front (now hidden) with the next image
@@ -365,7 +367,7 @@ function initHeroSlideshow() {
             // Flip to Front
             gsap.to(card, {
                 rotationY: 0,
-                duration: 1.5,
+                duration: 1.0,
                 ease: "power2.inOut",
                 onComplete: () => {
                     // Update Back (now hidden) with the next image
@@ -382,8 +384,9 @@ function initHeroSlideshow() {
 
     // Initial delay then start interval
     setTimeout(() => {
-        setInterval(flip, 5000);
-    }, 2000);
+        setInterval(flip, 3000);
+    }, 1000);
+
 }
 
 
@@ -497,7 +500,7 @@ function initContactForm() {
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
 
         window.open(whatsappUrl, '_blank');
-        
+
         // Optional: Clear form or show success message
         contactForm.reset();
     });
